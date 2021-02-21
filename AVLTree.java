@@ -1,5 +1,20 @@
 public class AVLTree extends BST {
-    
+    class Node {
+        int key, value; // key must be comparable, value is not necessary
+        Node left, right;
+        int height; // for AVL trees
+
+        // constructor for node
+        public Node(int k, int v, int height) {
+            this.key = k;
+            this.value = v;
+            this.left = null;
+            this.right = null;
+            this.height = height;
+        }
+    }
+
+
     public AVLTree() {
         super();
     }
@@ -49,17 +64,12 @@ public class AVLTree extends BST {
     }
 
     public Node insert(int k, int v, Node p) {
-        int h = 0;
-        return insertAux(k, v, p, h);
-    }
-
-    private Node insertAux(int k, int v, Node p, int height) {
         if (p == null) {
-            p = new Node(k, v, height);
+            p = new Node(k, v, 0);
         } else if (k < p.key) {
-            p.left = insertAux(k, v, p.left, (height + 1));
+            p.left = insert(k, v, p.left);
         } else if (k > p.key) {
-            p.right = insertAux(k, v, p.right, (height + 1));
+            p.right = insert(k, v, p.right);
         } else {
             throw Exception("Duplicate found.");
         }
