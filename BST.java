@@ -87,22 +87,16 @@ public class BST<K extends Comparable<K>, V> {
         } else {
             K pKey = p.getKey();
 
-            if (p.getLeft() == null || p.getRight() == null) {
-                if (p.getLeft() == null) {
-                    return p.getRight();
-                }
-                if (p.getRight() == null) {
-                    return p.getLeft();
-                }
-            } else if (k.compareTo(pKey) > 0) {
-                p.setRight(delete(k, p.getRight()));
-            } else if (k.compareTo(pKey) < 0) {
-                p.setLeft(delete(k, p.getLeft()));
-            } else {
+            if (k.compareTo(pKey) == 0) {
                 Node<K,V> r = findReplacement(p);
                 // copy r's value to p and delete r
                 p.setVal(r.getVal());
                 p.setRight(delete(r.getKey(), p.getRight()));
+                return r;
+            } else if (k.compareTo(pKey) > 0) {
+                p.setRight(delete(k, p.getRight()));
+            } else if (k.compareTo(pKey) < 0) {
+                p.setLeft(delete(k, p.getLeft()));
             }
             return p;
         }
